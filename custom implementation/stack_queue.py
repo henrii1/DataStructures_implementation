@@ -101,3 +101,13 @@ stack.get(timeout=3)
 
 
 #use these to construct any type of queue or stack.
+
+
+
+# implement priority queues by using sorting or heapq module
+import heapq
+#implementing priority queue using the heapq module
+list1 = [(1, "ria"), (4, "sia" ), (3, "gia")]
+heapq.heapify(list1)
+for i in range(len(list1)):
+    print(heapq.heappop(list1))    # pops out values based on their priority
