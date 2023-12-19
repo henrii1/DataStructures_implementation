@@ -326,3 +326,39 @@ def BFS(node, graph):
                     queue_ob.put(i)
                     level[i] = level[item] + 1
                     parent[i] = item
+
+
+
+
+# Djikstra's Algorithm for finding the shortest path length in a graph
+
+import heapq
+
+def dijkstra(graph, start):
+    # Initialize distances and visited set
+    distances = {node: float('infinity') for node in graph}
+    distances[start] = 0
+    visited = set()
+
+    # Priority queue to store (distance, node) pairs
+    priority_queue = [(0, start)]
+
+    while priority_queue:
+        # Get the node with the smallest distance
+        current_distance, current_node = heapq.heappop(priority_queue)
+
+        # Skip if already visited
+        if current_node in visited:
+            continue
+
+        # Mark the node as visited
+        visited.add(current_node)
+
+        # Update the distances to neighbors
+        for neighbor, weight in graph[current_node].items():
+            distance = current_distance + weight
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(priority_queue, (distance, neighbor))
+
+    return distances

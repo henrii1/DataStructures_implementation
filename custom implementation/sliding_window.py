@@ -290,3 +290,26 @@ calculated_solution1 = get_max_subarray(example_input1, subarray_size1)
 
 print(f"Example Input #1: {example_input1}, Subarray Size: {subarray_size1}, Solution: {calculated_solution1}")
 assert calculated_solution1 == solution1
+
+
+
+
+
+
+# Kadane's algorithm
+
+def kadane(num):
+    if not num:
+        return 0
+    start_sum = num[0]
+    max_sum = num[0]
+
+    for nu in num:
+        start_sum = max(nu, start_sum + nu)
+        max_sum = max(max_sum, start_sum)
+    return max_sum
+
+# Example usage:
+nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+result = kadane(nums)
+print("Maximum subarray sum:", result)
