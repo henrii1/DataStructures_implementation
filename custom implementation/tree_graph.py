@@ -362,3 +362,7 @@ def dijkstra(graph, start):
                 heapq.heappush(priority_queue, (distance, neighbor))
 
     return distances
+
+
+# use nonlocal when a variable defined in a function is to be update within another function that is within the first func
+# use global when the variable is defined without the function 
