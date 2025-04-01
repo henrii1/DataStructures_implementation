@@ -35,3 +35,27 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
     }
     return NULL;
 }
+
+/*
+Given an integer x, return true if x is a palindrome, and false otherwise.
+
+ 
+
+Example 1:
+
+Input: x = 121
+Output: true
+Explanation: 121 reads as 121 from left to right and from right to left.
+*/
+
+#include <stdbool.h>
+bool isPalindrome(int x) {
+    if (x < 0) return false;
+    char x_str[50];
+    sprintf(x_str, "%d", x);
+    int size = strlen(x_str);
+    for(int i = 0; i < size / 2; i++){
+        if (x_str[i] != x_str[size - 1 - i]) return false;
+    }
+    return true;
+}

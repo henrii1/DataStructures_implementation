@@ -38,3 +38,33 @@ class Solution {
             return {-1, -1};
         }
     };
+
+
+/*
+Given an integer x, return true if x is a palindrome, and false otherwise.
+
+ 
+
+Example 1:
+
+Input: x = 121
+Output: true
+Explanation: 121 reads as 121 from left to right and from right to left.
+*/
+
+#include <iostream>
+#include <string>
+class Solution {
+    public:
+        bool isPalindrome(int x) {
+            if (x < 0) return false;  // negative numbers are never palindromes
+    
+            string x_str = to_string(x);
+            int size = x_str.size();
+            for (int x = 0; x < size / 2; x++){
+                if (x_str[x] != x_str[size - 1 - x]) {return false;}
+    
+            }
+            return true;
+        }
+    };

@@ -22,3 +22,27 @@ class Solution:
             if complement in num_map:
                 return [num_map[complement], i]  # Return indices of complement and current number
             num_map[num] = i  # Store the number with its indexs
+
+
+
+"""
+Given an integer x, return true if x is a palindrome, and false otherwise.
+
+ 
+
+Example 1:
+
+Input: x = 121
+Output: true
+Explanation: 121 reads as 121 from left to right and from right to left.
+"""
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        if x < 0:
+            return False
+        x_str = str(x)
+        size = len(x_str)
+        for i in range(size // 2):
+            if (x_str[i] != x_str[size - 1 - i]):
+                return False
+        return True
