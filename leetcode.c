@@ -59,3 +59,79 @@ bool isPalindrome(int x) {
     }
     return true;
 }
+
+
+/*
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+Example 1:
+
+Input: s = "III"
+Output: 3
+Explanation: III = 3.
+*/
+
+// inefficient version
+int romanToInt(char* s) {
+    typedef struct {
+        char r;
+        int n;
+    } datatype;
+
+    // Define Roman numeral mapping
+    datatype dict[] = {
+        {'I', 1}, {'V', 5}, {'X', 10}, {'L', 50},
+        {'C', 100}, {'D', 500}, {'M', 1000}
+    };
+
+    int struct_size = 7;
+    int inp_size = strlen(s);
+    int sum = 0;
+
+    for (int i = 0; i < inp_size; i++) {
+        for (int j = 0; j < struct_size; j++) {
+            if (s[i] == dict[j].r) {
+                // Check for subtractive cases (IX, IV, etc.)
+                if ((s[i] == 'I') && (i < (inp_size-1)) && ((s[i+1] == 'V') || (s[i+1] == 'X'))) {
+                    sum -= dict[j].n;
+                } else if ((s[i] == 'X') && (i < (inp_size-1)) && ((s[i+1] == 'L') || (s[i+1] == 'C'))) {
+                    sum -= dict[j].n;
+                } else if ((s[i] == 'C') && (i < (inp_size-1)) && ((s[i+1] == 'D') || (s[i+1] == 'M'))) {
+                    sum -= dict[j].n;
+                } else {
+                    sum += dict[j].n;
+                }
+            }
+        }
+    }
+
+    return sum;
+}
+
+// more efficient version
+
+// Note: we can use arrays instead of structs. just use the roman placeholders to understand better
+int romanToInt(char* s) {
+    // Use an array to store values instead of looping through a struct
+    int dict[128] = {0};  // ASCII table size (0-127), all initialized to 0
+    dict['I'] = 1;
+    dict['V'] = 5;
+    dict['X'] = 10;
+    dict['L'] = 50;
+    dict['C'] = 100;
+    dict['D'] = 500;
+    dict['M'] = 1000;
+
+    int sum = 0;
+    int inp_size = strlen(s);
+
+    for (int i = 0; i < inp_size; i++) {
+        // If next numeral is larger, subtract this one
+        if (i + 1 < inp_size && dict[s[i]] < dict[s[i + 1]]) {
+            sum -= dict[s[i]];
+        } else {
+            sum += dict[s[i]];
+        }
+    }
+
+    return sum;
+}

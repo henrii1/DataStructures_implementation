@@ -68,3 +68,35 @@ class Solution {
             return true;
         }
     };
+
+
+/*
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+Example 1:
+
+Input: s = "III"
+Output: 3
+Explanation: III = 3.
+*/
+
+class Solution {
+    public:
+        int romanToInt(string s) {
+            unordered_map<char, int> dict {
+            {'I', 1}, {'V', 5}, {'X', 10}, {'L', 50},
+            {'C', 100}, {'D', 500}, {'M', 1000}
+        };
+        int size = s.size();
+        int sum = 0;
+        for (int i=0; i<size; i++){
+            if(i+1<size && dict[s[i]] < dict[s[i+1]]){
+                sum -= dict[s[i]];
+            } else{
+                sum += dict[s[i]];
+            }
+        }
+        return sum;
+        }
+    };
+
+    

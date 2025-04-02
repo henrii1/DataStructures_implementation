@@ -46,3 +46,31 @@ class Solution:
             if (x_str[i] != x_str[size - 1 - i]):
                 return False
         return True
+
+
+"""
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+Example 1:
+
+Input: s = "III"
+Output: 3
+Explanation: III = 3."
+"""
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        dic = {}
+        dic['I'] = 1
+        dic['V'] = 5
+        dic['X'] = 10
+        dic['L'] = 50
+        dic['C'] = 100
+        dic['D'] = 500
+        dic['M'] = 1000
+        sum = 0
+        length = len(s)
+        for i in range(length):
+            if (i + 1 < length and dic[s[i]] < dic[s[i + 1]]):
+                sum -= dic[s[i]]
+            else:
+                sum += dic[s[i]]
+        return sum
