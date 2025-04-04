@@ -99,4 +99,39 @@ class Solution {
         }
     };
 
-    
+
+
+
+/*
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+ 
+
+Example 1:
+
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+*/
+
+// sort the vector and compare the first and last elements
+#include <vector>
+#include <string>
+#include <algorithm>    //contains sort
+class Solution {
+    public:
+        string longestCommonPrefix(vector<string>& strs) {
+            string ans = "";
+            sort(strs.begin(), strs.end());
+            int size = strs.size();
+            for (auto i=0; i<min(strs[0].size(), strs[size-1].size()); i++){
+                if (strs[0][i] != strs[size-1][i]){
+                    return ans;
+                } else {
+                    ans += strs[0][i];
+                }
+            }
+            return ans;
+        }
+    };

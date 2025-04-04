@@ -135,3 +135,44 @@ int romanToInt(char* s) {
 
     return sum;
 }
+
+
+/*
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+ 
+
+Example 1:
+
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+*/
+
+// we cannot return an array defined in the function, so we need to malloc it
+// we must terminate the string with '\0' to avoid memory issues
+#include <string.h>  //strlen
+#include <stdlib.h>  //malloc
+
+char* longestCommonPrefix(char** strs, int strsSize) {
+    
+    char* ans = (char*)malloc(strlen(strs[0] + 1));
+    int size = strlen(strs[0]);
+    int i;
+    for (i = 0; i<size; i++){
+        char s = strs[0][i];
+        int j = 1;
+        while (j < strsSize){
+          if (strs[j][i] != s){
+            ans[i] = '\0';
+            return ans;
+          } else {
+            j += 1;
+          }
+        }
+        ans[i] = s;
+    }
+    ans[i] = '\0';
+    return ans;
+}

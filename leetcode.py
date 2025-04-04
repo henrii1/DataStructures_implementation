@@ -74,3 +74,32 @@ class Solution:
             else:
                 sum += dic[s[i]]
         return sum
+
+
+
+"""
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+ 
+
+Example 1:
+
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+"""
+
+#lexicographically sort the list and compare only first and last
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        ans = ""
+        sorted_list = sorted(strs)
+        first, last = sorted_list[0], sorted_list[-1]
+        for i in zip(first, last):
+            if i[0] != i[1]:
+                return ans
+            else:
+                ans += i[0]
+        return ans
+    
