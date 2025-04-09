@@ -176,3 +176,50 @@ char* longestCommonPrefix(char** strs, int strsSize) {
     ans[i] = '\0';
     return ans;
 }
+
+
+/*
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Every close bracket has a corresponding open bracket of the same type.
+ 
+
+Example 1:
+
+Input: s = "()"
+
+Output: true
+
+Example 2:
+
+Input: s = "()[]{}"
+
+Output: true
+*/
+
+//simulate a stack with pointer arithmetic
+bool isValid(char* s) {
+    char stack [10000];
+    int top = -1;
+    
+    for (int i=0; s[i] != '\0'; i++){
+      char c = s[i];
+      if (c =='[' || c == '{' || c == '('){
+          stack[++top] = c;  // push (increment pointer before assigning)
+      } else {
+          if (top == -1) {return false;}
+          char value = stack[top--];  // pop (take out value before decrementing)
+          if ((c == ']' && value != '[') ||
+              (c == '}' && value != '{') ||
+              (c == ')' && value != '(')) {return false;}
+  
+      }
+    }
+    return top == -1;  //stack should be empty
+  }
+
+  
