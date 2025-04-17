@@ -226,4 +226,95 @@ class Solution {
         return dummy.next;
     }
     };
+
+
+/*
+Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
+
+Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
+
+Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially. The remaining elements of nums are not important as well as the size of nums.
+Return k.
+Input: nums = [0,0,1,1,1,2,2,3,3,4]
+Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]
+Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+*/
+
+// In-place solutions run through the array once, switching values
+class Solution {
+    public:
+        int removeDuplicates(vector<int>& nums) {
+            if (nums.empty()){
+                return 0;
+            }
+    
+            int i = 0;
+            for (int j=1; j<nums.size(); j++){
+                if (nums[j] != nums[i]){
+                    i += 1;
+                    nums[i] = nums[j];
+                }
+            }
+    
+            return i + 1;
+        }
+    };
+
+
+/*
+Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.
+
+Consider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following things:
+
+Change the array nums such that the first k elements of nums contain the elements which are not equal to val. The remaining elements of nums are not important as well as the size of nums.
+Return k.
+Example 2:
+
+Input: nums = [0,1,2,2,3,0,4,2], val = 2
+Output: 5, nums = [0,1,4,0,3,_,_,_]
+
+*/
+
+// In-place solution
+class Solution {
+    public:
+        int removeElement(vector<int>& nums, int val) {
+            if (nums.empty()){
+                return 0;
+            }
+            int i = 0;
+            for (int j=0; j<nums.size(); j++){
+                if (nums[j] != val){
+                    nums[i] = nums[j];
+                    i += 1;
+                }
+            }
+            return i;
+        }
+    };
+
+
+/*
+Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+ 
+
+Example 1:
+
+Input: haystack = "sadbutsad", needle = "sad"
+Output: 0
+*/
+
+// Use .find method returns a size_t or int
+class Solution {
+    public:
+        int strStr(string haystack, string needle) {
+            size_t index = haystack.find(needle);      // can also return no position (npos)
+            if (index != string::npos) {
+                return index;
+            }
+            return -1;
+        }
+    };
         
