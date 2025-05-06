@@ -300,4 +300,25 @@ class Solution:
         for _ in range(3, n+1):
             a,b = b, a+b
         return b
-        
+
+
+"""
+Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.
+
+Input: head = [1,1,2]
+Output: [1,2]
+"""
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        current = head
+        while current and current.next:
+            if current.val == current.next.val:
+                current.next = current.next.next  # Skip the duplicate
+            else:
+                current = current.next
+        return head
