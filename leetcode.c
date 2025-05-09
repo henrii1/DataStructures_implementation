@@ -516,3 +516,27 @@ int* inorderTraversal(struct TreeNode* root, int* returnSize) {
 
     return result;
 }
+
+/*
+Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+
+Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+
+(regardless of if the children arrangement are different, i.e., val1 in lst in tree1 and val1 in rst in tree2)
+Input: p = [1,2,3], q = [1,2,3]
+Output: true
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+ bool isSameTree(struct TreeNode* p, struct TreeNode* q) {
+    if (!p && !q) return true;
+    if (!p || !q || p->val != q->val) return false;
+    return (isSameTree(p->right, q->right) && isSameTree(p->left, q->left));
+}
