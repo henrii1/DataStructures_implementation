@@ -443,3 +443,88 @@ class Solution:
         if not root:
             return True
         return self.isMirror(root.left, root.right)
+    
+
+
+"""
+Given the root of a binary tree, return its maximum depth.
+
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+Input: root = [3,9,20,null,null,15,7]
+Output: 3
+"""
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        leftDepth = self.maxDepth(root.left)
+        rightDepth = self.maxDepth(root.right)
+
+        return 1 + max(leftDepth, rightDepth)
+    
+
+"""
+Q108: Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
+
+Input: nums = [-10,-3,0,5,9]
+Output: [0,-3,9,-10,null,5]
+Explanation: [0,-10,5,null,-3,null,9] is also accepted:
+"""
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def buildtree(self, nums, left, right):
+        if left > right:
+            return
+        mid = left + (right-left) // 2
+        node = TreeNode(val=nums[mid])
+        node.left = self.buildtree(nums, left, mid-1)
+        node.right = self.buildtree(nums, mid+1, right)
+
+        return node
+
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        return self.buildtree(nums, 0, len(nums)-1)
+    
+
+"""
+Q110: Given a binary tree, determine if it is height-balanced.
+A height-balanced binary tree is a binary tree in which the depth of the two subtrees of every node never differs by more than one.
+
+Input: root = [3,9,20,null,null,15,7]
+Output: true
+"""
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def checkbalance(self, root):
+        if not root:
+            return 0
+        left = self.checkbalance(root.left)
+        if (left == -1):
+            return -1
+        right = self.checkbalance(root.right)
+        if (right == -1):
+            return -1
+        if abs(left - right) > 1:
+            return -1
+        return 1 + max(left, right)
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        return self.checkbalance(root) != -1

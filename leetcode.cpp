@@ -556,3 +556,110 @@ private:
         return(isMirror(left->left, right->right) && isMirror(left->right, right->left));
     }
 };
+
+/*
+Given the root of a binary tree, return its maximum depth.
+
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+Input: root = [3,9,20,null,null,15,7]
+Output: 3
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        if (!root) return 0;
+        int leftDepth = maxDepth(root->left);
+        int rightDepth = maxDepth(root->right);
+        
+        return 1 + std::max(leftDepth, rightDepth);
+    }
+};
+
+
+/*
+Q108: Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
+
+Input: nums = [-10,-3,0,5,9]
+Output: [0,-3,9,-10,null,5]
+Explanation: [0,-10,5,null,-3,null,9] is also accepted:
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        return buildtree(nums, 0, nums.size()-1);
+    }
+private:
+    TreeNode* buildtree(vector<int>& nums, int left, int right){
+       if (left > right) return nullptr;
+        
+       int mid = left + (right-left) / 2;
+       TreeNode* node = new TreeNode(nums[mid]);
+       node->left = buildtree(nums, left, mid-1);
+       node->right = buildtree(nums, mid+1, right);
+       return node;
+    }
+};
+
+/*
+Q110: Given a binary tree, determine if it is height-balanced.
+A height-balanced binary tree is a binary tree in which the depth of the two subtrees of every node never differs by more than one.
+
+Input: root = [3,9,20,null,null,15,7]
+Output: true
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool isBalanced(TreeNode* root) {
+        return checkbalance(root) != -1;
+    }
+private:
+    int checkbalance(TreeNode* node){
+        if (!node) return 0;
+
+        int left = checkbalance(node->left);
+        if (left == -1) return -1;
+
+        int right = checkbalance(node->right);
+        if (right == -1) return -1;
+
+        if (abs(left - right) > 1) return -1;
+
+        return 1 + std::max(left, right);
+    }
+};
