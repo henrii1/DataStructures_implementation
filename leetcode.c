@@ -658,3 +658,36 @@ int checkbalance(struct TreeNode* root){
 bool isBalanced(struct TreeNode* root) {
     return checkbalance(root) != -1;
 }
+
+
+/*
+Given a binary tree, find its minimum depth.
+
+The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+
+Note: A leaf is a node with no children.
+
+Example 2:
+
+Input: root = [2,null,3,null,4,null,5,null,6]
+Output: 5
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+ #define MIN(a, b) ((a) < (b) ? (a) : (b))
+int minDepth(struct TreeNode* root) {
+    if (!root) return 0;
+
+    // If one of the children is NULL, you must go down the other side
+    if (!root->left) return 1 + minDepth(root->right);
+    if (!root->right) return 1 + minDepth(root->left);
+
+    return 1 + MIN(minDepth(root->left), minDepth(root->right));
+}
