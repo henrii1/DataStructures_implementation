@@ -713,3 +713,93 @@ public:
             return 0;
     }
 };
+
+
+/*
+Q112: Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+
+A leaf is a node with no children.
+
+Input: root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22
+Output: true
+Explanation: The root-to-leaf path with the target sum is shown.
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+ /**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+
+
+ // DFS recursive
+class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if (!root) return false;
+
+        if(!root->left && !root->right) return root->val == targetSum;
+        return hasPathSum(root->left, targetSum - root->val) || hasPathSum(root->right, targetSum - root->val);
+    }
+};
+
+
+// DFS iterative
+class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if (!root) return false;
+
+        std::stack<std::pair<TreeNode*, int>> stack;
+        stack.push({root, root->val});
+
+        while(! stack.empty()){
+            auto [node, sum] = stack.top();
+            stack.pop();
+
+            if (!node->left && !node->right && sum == targetSum) return true;
+
+            if (node->left) stack.push({node->left, node->left->val + sum});
+            if (node->right) stack.push({node->right, node->right->val + sum});
+        }
+        return false;
+    }
+};
+
+
+// BFS iterative
+class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if (!root) return false;
+
+        std::queue<std::pair<TreeNode*, int>> queue;
+        queue.push({root, root->val});
+
+        while(! queue.empty()){
+            auto [node, sum] = queue.front();
+            queue.pop();
+
+            if (!node->left && !node->right && sum == targetSum) return true;
+
+            if (node->left) queue.push({node->left, node->left->val + sum});
+            if (node->right) queue.push({node->right, node->right->val + sum});
+        }
+        return false;
+    }
+};

@@ -583,3 +583,76 @@ class Solution:
             return 1 + self.minDepth(root.left)
 
         return 1 + min(self.minDepth(root.left), self.minDepth(root.right))
+    
+
+"""
+Q112: Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+
+A leaf is a node with no children.
+# Definition for a binary tree node.
+
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+"""
+
+# DFS recursive
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+
+        if not root.left and not root.right and root.val==targetSum:
+            return True
+
+        return self.hasPathSum(root.left, targetSum-root.val) or self.hasPathSum(root.right, targetSum-root.val)
+
+        
+
+# DFS iterative
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+        
+        stack = []
+        stack.append([root, root.val])
+
+        while stack:
+            node, sum = stack.pop()
+
+            if not node.left and not node.right and sum==targetSum:
+                return True
+            
+            if node.right:
+                stack.append([node.right, sum + node.right.val])
+            
+            if node.left:
+                stack.append([node.left, sum + node.left.val])
+        return False
+    
+
+# BFS iterative
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+        
+        queue = deque()
+        queue.appendleft([root, root.val])
+
+        while queue:
+            node, sum = queue.pop()
+
+            if not node.left and not node.right and sum == targetSum:
+                return True
+            
+            if node.left:
+                queue.appendleft([node.left, sum + node.left.val])
+
+            if node.right:
+                queue.appendleft([node.right, sum + node.right.val])
+
+        return False

@@ -691,3 +691,123 @@ int minDepth(struct TreeNode* root) {
 
     return 1 + MIN(minDepth(root->left), minDepth(root->right));
 }
+
+/*
+Q112: Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+
+A leaf is a node with no children.
+
+Input: root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22
+Output: true
+Explanation: The root-to-leaf path with the target sum is shown.
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+// Recursive DFS
+bool hasPathSum(struct TreeNode* root, int targetSum) {
+    if (!root) return false;
+    
+    if (!root->left && !root->right) return root->val == targetSum;
+
+    return hasPathSum(root->left, targetSum - root->val) || hasPathSum(root->right, targetSum - root->val);
+}
+
+// DFS (manage stack)
+
+typedef struct {
+   struct TreeNode* node;
+    int sum;
+} NodePair;
+
+#define MAX_SIZE 1000
+
+int top = -1;
+NodePair stack[MAX_SIZE];
+
+void push(NodePair val) {
+    if (top < MAX_SIZE - 1) stack[++top] = val;
+}
+
+NodePair pop(){
+    return stack[top--];
+}
+
+int is_stack_empty(){
+    return top == -1;
+}
+
+bool hasPathSum(struct TreeNode* root, int targetSum){
+    if (!root) return false;
+    
+    top = -1;
+    push((NodePair){root, root->val});
+
+    while (!is_stack_empty()){
+        NodePair curr = pop();
+        struct TreeNode* node = curr.node;
+        int sum = curr.sum;
+
+        if (!node->left && !node->right && sum == targetSum) return true;
+
+        if (node->right) push((NodePair){node->right, sum + node->right->val});
+        if (node->left) push((NodePair){node->left, sum + node->left->val});
+    }
+
+    return false;
+}
+// BFS method
+
+
+typedef struct {
+   struct TreeNode* node;
+    int sum;
+} NodePair;
+#define MAX_SIZE 1000
+int front = 0, rear = 0;
+NodePair queue[MAX_SIZE];
+
+void enqueue(NodePair val){
+    if ((rear + 1) % MAX_SIZE != front){
+        queue[rear] = val;
+        rear = (rear + 1 ) % MAX_SIZE;
+    }
+}
+
+NodePair dequeue(){
+    NodePair val = queue[front];
+    front = (front + 1) % MAX_SIZE;
+    return val;
+}
+
+int is_queue_empty(){
+    return front == rear;
+}
+
+
+bool hasPathSum(struct TreeNode* root, int targetSum){
+    if (!root) return 0;
+
+    front = rear = 0;  // all variables can be updated inside functions
+    enqueue((NodePair){root, root->val});
+
+    while (!is_queue_empty()){
+        NodePair curr = dequeue();
+        struct TreeNode* node = curr.node;
+        int sum = curr.sum;
+
+        if (!node->left && !node->right && sum == targetSum) return true;
+
+        if (node->left) enqueue((NodePair){node->left, node->left->val + sum});
+        if (node->right) enqueue((NodePair){node->right, node->right->val + sum});
+
+    }
+    return false;
+}
