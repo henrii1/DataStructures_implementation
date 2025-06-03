@@ -656,3 +656,34 @@ class Solution:
                 queue.appendleft([node.right, sum + node.right.val])
 
         return False
+    
+
+
+"""
+Given an integer numRows, return the first numRows of Pascal's triangle.
+
+In Pascal's triangle, each number is the sum of the two numbers directly above it as shown:
+
+Example 1:
+
+Input: numRows = 5
+Output: [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
+"""
+
+# Brute approach
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        final_result = []
+        start = 1
+        final_result.append([start])
+        for i in range(numRows-1):
+            previous_lst = final_result[-1]
+            new_lst = [1]
+            for j in range(len(previous_lst)-1):
+                new_lst.append(previous_lst[j] + previous_lst[j+1])
+            new_lst.append(1)
+            final_result.append(new_lst)
+
+        return final_result
+    
+    
