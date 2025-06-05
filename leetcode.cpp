@@ -832,3 +832,28 @@ public:
         return triangle;
     }
 };
+
+
+/*
+Q119: Given an integer rowIndex, return the rowIndexth (0-indexed) row of the Pascal's triangle.
+
+Input: rowIndex = 3
+Output: [1,3,3,1]
+*/
+
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+        vector<vector<int>> triangle;
+
+        for (int i=0; i<=rowIndex; i++){
+            vector<int> row(i+1, 1);  // constructor initialization for vector, (num_elements, default_value)
+
+            for (int j=1; j<i; j++){
+                row[j] = triangle[i-1][j-1] + triangle[i-1][j];
+            }
+            triangle.push_back(row);
+        }
+        return triangle.back();
+    }
+};

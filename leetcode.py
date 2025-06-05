@@ -687,3 +687,25 @@ class Solution:
         return final_result
     
     
+
+"""
+Q119: Given an integer rowIndex, return the rowIndexth (0-indexed) row of the Pascal's triangle.
+
+Input: rowIndex = 3
+Output: [1,3,3,1]
+"""
+
+class Solution:
+    def getRow(self, rowIndex: int) -> List[int]:
+        final_result = []
+        start = 1
+        final_result.append([start])
+        for i in range(rowIndex):
+            previous_lst = final_result[-1]
+            new_lst = [1]
+            for j in range(len(previous_lst)-1):
+                new_lst.append(previous_lst[j] + previous_lst[j+1])
+            new_lst.append(1)
+            final_result.append(new_lst)
+
+        return final_result[-1]

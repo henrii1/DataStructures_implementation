@@ -847,3 +847,36 @@ int** generate(int numRows, int* returnSize, int** returnColumnSizes) {
     }
     return triangle;
 }
+
+
+/*
+Q119: Given an integer rowIndex, return the rowIndexth (0-indexed) row of the Pascal's triangle.
+
+Input: rowIndex = 3
+Output: [1,3,3,1]
+*/
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* getRow(int rowIndex, int* returnSize) {
+    *returnSize = rowIndex + 1;
+    int** triangle = (int**)malloc((rowIndex + 1) * sizeof(int*));  // pointer allocating memory to store int pointers.
+
+    for (int i = 0; i <= rowIndex; i++) {
+        triangle[i] = (int*)malloc((i + 1) * sizeof(int));  // pointer allocating memory to store actual ints
+        triangle[i][0] = triangle[i][i] = 1;
+        for (int j = 1; j < i; j++) {
+            triangle[i][j] = triangle[i - 1][j - 1] + triangle[i - 1][j];
+        }
+    }
+
+    int* result = triangle[rowIndex];
+
+    //  // Free all but the last row (to avoid leak, since you're returning it)
+    // for (int i = 0; i < rowIndex; i++) {
+    //     free(triangle[i]);
+    // }
+    // free(triangle);
+
+    return result;
+}
